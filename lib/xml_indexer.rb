@@ -8,6 +8,8 @@ class XMLIndexer
     @repos = Repository.instance
     @index = Index.new
     @elements = []
+    @position = 0
+    @filenum = 0
   end
 
   def load(db, fields)
@@ -22,6 +24,14 @@ class XMLIndexer
   end
 
   def load_files(files)
+    @position = 0
+    files.each do |file|
+      load_file(file)
+    end
+    @filenum = @filenum + 1
+  end
+
+  def load_file(file)
 
   end
 
