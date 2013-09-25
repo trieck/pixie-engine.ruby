@@ -1,6 +1,7 @@
 require 'index'
 require 'index_fields'
 require 'repository'
+require 'xml/libxml'
 
 class XMLIndexer
 

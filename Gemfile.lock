@@ -2,6 +2,8 @@ GEM
   remote: https://rubygems.org/
   specs:
     bindata (1.6.0)
+    libxml-ruby (2.7.0)
+    libxml-ruby (2.7.0-x86-mingw32)
 
 PLATFORMS
   java
@@ -9,3 +11,4 @@ PLATFORMS
 
 DEPENDENCIES
   bindata
+  libxml-ruby
