@@ -41,11 +41,11 @@ class XMLIndexer < Nokogiri::XML::SAX::Document
     files.each do |file|
       load_file(file)
     end
-    @filenum = @filenum + 1
+    @filenum += 1
   end
 
   def load_file(file)
-    parser = Nokogiri::XML::SAX::Parser.new(XMLIndexer.new)
+    parser = Nokogiri::XML::SAX::Parser.new(self)
     parser.parse_file(file)
   end
 

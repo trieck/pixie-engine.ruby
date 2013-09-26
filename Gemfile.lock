@@ -1,0 +1,14 @@
+GEM
+  remote: https://rubygems.org/
+  specs:
+    bindata (1.6.0)
+    mini_portile (0.5.1)
+    nokogiri (1.6.0)
+      mini_portile (~> 0.5.0)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  bindata
+  nokogiri

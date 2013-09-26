@@ -1,7 +1,7 @@
 
 content:
  # repository location
- repos: d:/content
+ repos: /usr/local/content
 
 index:
  # number of ways to merge
