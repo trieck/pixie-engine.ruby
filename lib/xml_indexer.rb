@@ -1,9 +1,11 @@
 require 'index'
 require 'index_fields'
 require 'repository'
-require 'xml/libxml'
+#require 'xml/libxml'
+require 'rubygems'
+require 'nokogiri'
 
-class XMLIndexer
+class XMLIndexer < Nokogiri::XML::SAX::Document
 
   def initialize
     @repos = Repository.instance
@@ -11,6 +13,18 @@ class XMLIndexer
     @elements = []
     @position = 0
     @filenum = 0
+  end
+
+  def start_element name, attrs = []
+    puts "#{name} started!"
+  end
+
+  def end_element name
+    puts "#{name} ended"
+  end
+
+  def characters string
+    puts "characters: #{string}"
   end
 
   def load(db, fields)
@@ -33,7 +47,8 @@ class XMLIndexer
   end
 
   def load_file(file)
-
+    parser = Nokogiri::XML::SAX::Parser.new(XMLIndexer.new)
+    parser.parse_file(file)
   end
 
   def expand(dir)
