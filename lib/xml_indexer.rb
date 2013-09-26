@@ -1,8 +1,6 @@
 require 'index'
 require 'index_fields'
 require 'repository'
-#require 'xml/libxml'
-require 'rubygems'
 require 'nokogiri'
 
 class XMLIndexer < Nokogiri::XML::SAX::Document
