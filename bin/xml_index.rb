@@ -19,6 +19,7 @@ begin
   index.load(ARGV[0], ARGV[1,ARGV.length])
 rescue Exception => e
   puts e.message
+  print e.backtrace.join('\n')
   exit(1)
 end
 

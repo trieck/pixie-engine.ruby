@@ -1,15 +1,14 @@
 require 'index'
 require 'index_fields'
 require 'repository'
-require 'nokogiri'
+require 'q_parser'
 
-class XMLIndexer < Nokogiri::XML::SAX::Document
+class XMLIndexer < QParser
 
   def initialize
     @repos = Repository.instance
     @index = Index.new
     @elements = []
-    @position = 0
     @filenum = 0
   end
 
@@ -37,7 +36,6 @@ class XMLIndexer < Nokogiri::XML::SAX::Document
   end
 
   def load_files(files)
-    @position = 0
     files.each do |file|
       load_file(file)
     end
@@ -45,8 +43,8 @@ class XMLIndexer < Nokogiri::XML::SAX::Document
   end
 
   def load_file(file)
-    parser = Nokogiri::XML::SAX::Parser.new(self)
-    parser.parse_file(file)
+    self.position = 0
+    parse(file)
   end
 
   def expand(dir)
