@@ -1,10 +1,5 @@
 class PushbackReader
 
-  @buf # pushback buffer
-  @pos # current position in the pushback buffer
-  @io # underlying i/o
-  @size # size of buffers
-
   def initialize(io, size)
     unless io.kind_of? IO
       raise ArgumentError, "argument #{io.inspect} must be of type IO."

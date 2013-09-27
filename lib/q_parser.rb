@@ -6,10 +6,10 @@ class QParser
 
   :undeftag # undefined tag
   :begintag # begin tag
-  :endtag # end tag
+  :endtag   # end tag
   :emptytag # empty tag
-  :proctag # processing instruction tag
-  :decltag # declaration tag
+  :proctag  # processing instruction tag
+  :decltag  # declaration tag
 
   # position in input stream
   attr_accessor :position
