@@ -12,6 +12,10 @@ class XMLIndexer < QParser
     @filenum = 0
   end
 
+  def value(value)
+    puts "value: #{value}"
+  end
+
   def start_element name, attrs = []
     puts "#{name} started!"
   end

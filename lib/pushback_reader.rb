@@ -1,27 +1,22 @@
-class PushbackReader
+require 'buffered_reader'
+
+class PushbackReader  < BufferedReader
+
+  BUFFER_SIZE = 8192
 
   def initialize(io, size)
-    unless io.kind_of? IO
-      raise ArgumentError, "argument #{io.inspect} must be of type IO."
-    end
-    @io = io
+    super(io, BUFFER_SIZE)
     @pos = @size = size
     @buf = Array.new(size)
   end
 
   def read
-    if @pos == @size
-      s = ""; @pos = 0
-      if @io.read(@size, s).nil?
-        nil
-      else
-        @buf = s.bytes
-        @buf[0]
-      end
-    else
+    if (@pos < @buf.length)
       c = @buf[@pos]
       @pos += 1
       c
+    else
+      super
     end
   end
 
@@ -32,4 +27,17 @@ class PushbackReader
     @buf[@pos -= 1] = c
   end
 
+  def unreadv(buff, offset, len)
+    if len > @pos
+      raise IOError, "Pushback buffer overflow"
+    end
+
+    @pos -= len
+
+    n = 0
+    buff[offset, len].each do |b|
+      @buf[@pos+n] = b
+      n += 1
+    end
+  end
 end

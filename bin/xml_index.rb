@@ -17,7 +17,7 @@ timer = Timer.new
 begin
   index = XMLIndexer.new
   index.load(ARGV[0], ARGV[1,ARGV.length])
-rescue Exception => e
+rescue IOError, ArgumentError => e
   puts e.message
   print e.backtrace.join('\n')
   exit(1)
