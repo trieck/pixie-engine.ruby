@@ -9,13 +9,13 @@ class BufferedReader
   end
 
   def read
-    if @index == @bsize
+    if @index == @buffer.size
       s = String.new; @index = 0
       if @io.read(@bsize, s).nil?
         nil
       else
         @buffer = s.bytes
-        @index += 1
+        @index = 1
         @buffer[0]
       end
     else

@@ -24,19 +24,19 @@ class PushbackReader  < BufferedReader
     if @pos == 0
       raise IOError, "Pushback buffer overflow"
     end
-    @buf[@pos -= 1] = c
+    @buf[@pos -= 1] = c.chr
   end
 
-  def unreadv(buff, offset, len)
-    if len > @pos
+  def unreads(buff)
+    if buff.length > @pos
       raise IOError, "Pushback buffer overflow"
     end
 
-    @pos -= len
+    @pos -= buff.length
 
     n = 0
-    buff[offset, len].each do |b|
-      @buf[@pos+n] = b
+    buff.split("").each do |b|
+      @buf[@pos+n] = b.chr
       n += 1
     end
   end
