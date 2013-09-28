@@ -16,16 +16,12 @@ class XMLIndexer < QParser
     puts "value: #{value}"
   end
 
-  def start_element name, attrs = []
-    puts "#{name} started!"
+  def start_element name, tag
+    puts "#{name} started: tag: #{tag}"
   end
 
-  def end_element name
-    puts "#{name} ended"
-  end
-
-  def characters string
-    puts "characters: #{string}"
+  def end_element
+    puts "element ended"
   end
 
   def load(db, fields)

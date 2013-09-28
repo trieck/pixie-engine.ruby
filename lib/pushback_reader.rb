@@ -11,7 +11,7 @@ class PushbackReader  < BufferedReader
   end
 
   def read
-    if (@pos < @buf.length)
+    if @pos < @buf.length
       c = @buf[@pos]
       @pos += 1
       c

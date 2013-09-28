@@ -25,7 +25,7 @@ class QParser
   end
 
   def parse_doc
-    while c = read
+    until (c = read).nil?
       buffer = lookahead(3)
       unget(c)
 
@@ -61,9 +61,12 @@ class QParser
 
 
   def read
-    c = @reader.read.chr
-    @position += 1
-    return c
+    if (c = @reader.read).nil?
+      nil
+    else
+      @position += 1
+      c.chr
+    end
   end
 
   # lookahead n characters
@@ -73,7 +76,10 @@ class QParser
     buffer = String.new
 
     i = 0
-    while i < n && (c = @reader.read)
+    while i < n
+      if (c = @reader.read).nil?
+        break
+      end
       buffer << c.chr
       i += 1
     end
@@ -81,7 +87,7 @@ class QParser
     # unread the characters read
     @reader.unreads(buffer)
 
-    return buffer
+    buffer
   end
 
   def unget(c)
@@ -92,7 +98,7 @@ class QParser
   def get_value
     value = String.new
 
-    while c = read
+    until (c = read).nil?
       case c
         when '<' # tag
           unget(c)
@@ -108,7 +114,7 @@ class QParser
 
     tag = String.new
 
-    while c = read
+    until (c = read).nil?
       if c == '>'
         tag << c
         break
@@ -116,18 +122,18 @@ class QParser
       tag << c
     end
 
-    return tag
+    tag
   end
 
   def end_tag
-    if @type & EMPTYTAGS
+    if (@type & EMPTYTAGS) != 0
       @type = UNDEFTAG
       return ""
     end
 
     tag = String.new
 
-    while c = read
+    until (c = read).nil?
       if c == '>'
         tag << c
         break
@@ -137,32 +143,31 @@ class QParser
 
     @type = UNDEFTAG
 
-    return tag
+    tag
   end
 
   def tag_type(tag)
     i = 0
     tag.split("").each do |c|
-      case c
-        when '<'
-          if i < tag.length-1 && tag[i+1] == '!'
-            return DECLTAG
-          end
-          if i < tag.length-1 && tag[i+1] == '?'
-            return PROCTAG
-          end
-          if i < tag.length-1 && tag[i+1] == '/'
-            return ENDTAG
-          end
-        when '>'
-          if i > 0 && tag[i-1] == '/'
-            return EMPTYTAG
-          end
-          return BEGINTAG
+      if c == '<'
+        if i < tag.length-1 && tag[i+1] == '!'
+          return DECLTAG
+        end
+        if i < tag.length-1 && tag[i+1] == '?'
+          return PROCTAG
+        end
+        if i < tag.length-1 && tag[i+1] == '/'
+          return ENDTAG
+        end
+      elsif c == '>'
+        if i > 0 && tag[i-1] == '/'
+          return EMPTYTAG
+        end
+        return BEGINTAG
       end
       i += 1
     end
-    return UNDEFTAG
+    UNDEFTAG
   end
 
   def tag_name(tag)
@@ -179,13 +184,13 @@ class QParser
       end
     end
 
-    return name
+    name
   end
 
   def get_comment
     comment = String.new
 
-    while c = read
+    until (c = read).nil?
       buffer = lookahead(2)
       if c == '-' && buffer[0] == '-' && buffer[1] == '>'
         comment << c # -->
@@ -196,7 +201,7 @@ class QParser
       comment << c
     end
 
-    return comment
+    comment
   end
 end
 
