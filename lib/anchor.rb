@@ -12,11 +12,40 @@
 #  DOCID       :  The upper 48-bits of the anchor represents the document id.
 
 class Anchor
+  include Comparable
+
   FILENUM_BITS = 16
   OFFSET_BITS = 32
   WORDNUM_BITS = 16
 
-  def self.anchor_id(filenum, offset, wordnum)
+  attr_reader :anchorid
+
+  def initialize(anchorid)
+    @anchorid = anchorid
+  end
+
+  def docid
+    # need an unsigned right shift here like >>>
+    (@anchorid >> WORDNUM_BITS) & 0x7FFFFFFF
+  end
+
+  def wordnum
+    @anchorid & 0x7FFF
+  end
+
+  def self.make_anchor(filenum, offset, wordnum)
+    raise unless (filenum < (1 << FILENUM_BITS) - 1)
+    raise unless (offset < (1 << OFFSET_BITS) - 1)
+    raise unless (wordnum < (1 << WORDNUM_BITS) - 1)
+
+    anchorid = (filenum & 0x7FFF) << (OFFSET_BITS + WORDNUM_BITS)
+    anchorid |= (offset & 0x7FFFFFFF) << WORDNUM_BITS
+    anchorid |= wordnum & 0x7FFF
+    anchorid
+  end
+
+  def <=>(other)
+    [self.anchorid] <=> [other.anchorid]
   end
 
 end

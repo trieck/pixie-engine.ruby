@@ -26,7 +26,7 @@ class XMLIndexer < QParser
     i = 0
     while (tok = lexer.get_token).length > 0
       term = "#{field}:#{tok}"
-      anchor = Anchor.anchor_id(@filenum, @offset, i)
+      anchor = Anchor.make_anchor(@filenum, @offset, i)
       @index.insert(term, anchor)
       i += 1
     end
