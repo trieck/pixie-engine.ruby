@@ -59,7 +59,6 @@ class QParser
     end
   end
 
-
   def read
     if (c = @reader.read).nil?
       nil
@@ -100,11 +99,11 @@ class QParser
 
     until (c = read).nil?
       case c
-        when '<' # tag
-          unget(c)
-          return value
-        else
-          value << c
+      when '<' # tag
+        unget(c)
+        return value
+      else
+        value << c
       end
     end
     value
@@ -175,12 +174,12 @@ class QParser
 
     tag.split("").each do |c|
       case c
-        when ' ', '\t', '\r', '\n', '>', '/'
-          return name
-        when '<', '!', '?'
-          next
-        else
-          name << c
+      when ' ', '\t', '\r', '\n', '>', '/'
+        return name
+      when '<', '!', '?'
+        next
+      else
+        name << c
       end
     end
 

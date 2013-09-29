@@ -1,7 +1,9 @@
 class Index
 
-  def write(db, fields)
+  def insert(term, anchor)
+  end
 
+  def write(db, fields)
   end
 
 end

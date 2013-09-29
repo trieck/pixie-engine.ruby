@@ -22,14 +22,14 @@ class PushbackReader  < BufferedReader
 
   def unread(c)
     if @pos == 0
-      raise IOError, "Pushback buffer overflow"
+      raise IOError, 'Pushback buffer overflow'
     end
     @buf[@pos -= 1] = c.chr
   end
 
   def unreads(buff)
     if buff.length > @pos
-      raise IOError, "Pushback buffer overflow"
+      raise IOError, 'Pushback buffer overflow'
     end
 
     @pos -= buff.length

@@ -10,7 +10,7 @@ class BufferedReader
 
   def read
     if @index == @buffer.size
-      s = String.new
+      s = ''
       if @io.read(@bsize, s).nil?
         nil
       else
