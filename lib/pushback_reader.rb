@@ -1,6 +1,6 @@
 require 'buffered_reader'
 
-class PushbackReader  < BufferedReader
+class PushbackReader < BufferedReader
 
   BUFFER_SIZE = 8192
 
@@ -35,8 +35,8 @@ class PushbackReader  < BufferedReader
     @pos -= buff.length
 
     n = 0
-    buff.split("").each do |b|
-      @buf[@pos+n] = b.chr
+    buff.each_char do |c|
+      @buf[@pos+n] = c
       n += 1
     end
   end

@@ -25,7 +25,7 @@ class QParser
   end
 
   def parse_doc
-    until (c = read).nil?
+    while (c = read)
       buffer = lookahead(3)
       unget(c)
 
@@ -60,9 +60,7 @@ class QParser
   end
 
   def read
-    if (c = @reader.read).nil?
-      nil
-    else
+    if (c = @reader.read)
       @position += 1
       c.chr
     end
@@ -72,7 +70,7 @@ class QParser
   def lookahead(n)
     # doesn't alter position
 
-    buffer = String.new
+    buffer = ''
 
     i = 0
     while i < n
@@ -95,9 +93,9 @@ class QParser
   end
 
   def get_value
-    value = String.new
+    value = ''
 
-    until (c = read).nil?
+    while (c = read)
       case c
       when '<' # tag
         unget(c)
@@ -111,9 +109,9 @@ class QParser
 
   def start_tag
 
-    tag = String.new
+    tag = ''
 
-    until (c = read).nil?
+    while (c = read)
       if c == '>'
         tag << c
         break
@@ -130,9 +128,9 @@ class QParser
       return ""
     end
 
-    tag = String.new
+    tag = ''
 
-    until (c = read).nil?
+    while (c = read)
       if c == '>'
         tag << c
         break
@@ -147,7 +145,7 @@ class QParser
 
   def tag_type(tag)
     i = 0
-    tag.split("").each do |c|
+    tag.each_char do |c|
       if c == '<'
         if i < tag.length-1 && tag[i+1] == '!'
           return DECLTAG
@@ -170,9 +168,9 @@ class QParser
   end
 
   def tag_name(tag)
-    name = String.new
+    name = ''
 
-    tag.split("").each do |c|
+    tag.each_char do |c|
       case c
       when ' ', '\t', '\r', '\n', '>', '/'
         return name
@@ -187,9 +185,9 @@ class QParser
   end
 
   def get_comment
-    comment = String.new
+    comment = ''
 
-    until (c = read).nil?
+    while (c = read)
       buffer = lookahead(2)
       if c == '-' && buffer[0] == '-' && buffer[1] == '>'
         comment << c # -->

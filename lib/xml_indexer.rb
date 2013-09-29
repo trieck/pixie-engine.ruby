@@ -12,6 +12,7 @@ class XMLIndexer < QParser
     @index = Index.new
     @elements = []
     @filenum = 0
+    @offset = 0
   end
 
   def value(value)
@@ -20,14 +21,15 @@ class XMLIndexer < QParser
     end
 
     field = @elements.last
-    lexer = Lexer.new field
+    lexer = Lexer.new(value)
 
-    until (tok = lexer.get_token).nil?
+    i = 0
+    while (tok = lexer.get_token).length > 0
       term = "#{field}:#{tok}"
-      anchor = Anchor.anchor_id(@filenum, offset, i)
+      anchor = Anchor.anchor_id(@filenum, @offset, i)
       @index.insert(term, anchor)
+      i += 1
     end
-
   end
 
   def start_element(name, tag)
