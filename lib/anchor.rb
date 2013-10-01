@@ -1,6 +1,6 @@
 # An anchor is a virtual term-location identifier in the document repository.
 # Each anchor is 8-bytes long. The bit-layout of an anchor is:
-# -------------ANCHOR-------------
+#  -------------ANCHOR-------------
 #  63.....48 47........16 15......0
 #  {FILENUM} {FILEOFFSET} {WORDNUM}
 #  ---------DOCID--------|---------
