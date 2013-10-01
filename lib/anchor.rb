@@ -4,12 +4,12 @@
 #  63.....48 47........16 15......0
 #  {FILENUM} {FILEOFFSET} {WORDNUM}
 #  ---------DOCID--------|---------
-#  FILENUM 	   :  file # in repository (16-bits, 32,767 max number of files)
-#  FILEOFFSET	 :  offset into file where record is located (32-bits,
+#  FILENUM      : file # in repository (16-bits, 32,767 max number of files)
+#  FILEOFFSET   : offset into file where record is located (32-bits,
 #                 max file size ~2GB)
-#  WORDNUM     :  word number of term in field (16-bits,
+#  WORDNUM      : word number of term in field (16-bits,
 #                 32,767 max words per field)
-#  DOCID       :  The upper 48-bits of the anchor represents the document id.
+#  DOCID        : The upper 48-bits of the anchor represents the document id.
 
 class Anchor
   include Comparable
