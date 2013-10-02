@@ -1,4 +1,5 @@
 require 'inverter_recs'
+require 'bindata'
 
 class Inverter
 
@@ -7,7 +8,6 @@ class Inverter
   attr_reader :count
 
   def initialize
-    @records = InverterRecs.new # hash table of records
     @count = 0 # number of records in table
   end
 
@@ -41,6 +41,10 @@ class Inverter
 
   def insert(term, anchor)
 
+  end
+
+  def alloc
+    @records = InverterRecs.allocate(@size)
   end
 
 end
