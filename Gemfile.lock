@@ -2,6 +2,10 @@ GEM
   remote: https://rubygems.org/
   specs:
     bindata (1.6.0)
+    power_assert (2.0.1)
+    rake (13.0.6)
+    test-unit (3.5.3)
+      power_assert
 
 PLATFORMS
   ruby
@@ -10,3 +14,8 @@ PLATFORMS
 
 DEPENDENCIES
   bindata
+  rake
+  test-unit
+
+BUNDLED WITH
+   2.3.3
